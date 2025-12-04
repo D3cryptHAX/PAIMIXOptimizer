@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #1a1c22;
+    color: white;
+}
+
+.container {
+    width: 900px;
+    margin: auto;
+    padding-top: 40px;
+}
+
+#search-panel {
+    display: flex;
+    gap: 10px;
+}
+
+#uidInput {
+    flex: 1;
+    padding: 8px;
+    font-size: 1.1em;
+}
+
+button {
+    padding: 8px 15px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.artifact {
+    background: #24262e;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+}
