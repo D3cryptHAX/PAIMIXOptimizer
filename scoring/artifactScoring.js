@@ -1,13 +1,3 @@
-const MAX_ROLL = {
-    "critRate": 3.9,
-    "critDamage": 7.8,
-    "atkPercent": 5.8,
-    "hpPercent": 5.8,
-    "defPercent": 7.3,
-    "em": 23,
-    "er": 6.5
-};
-
 function scoreArtifact(artifact, profile) {
     let totalScore = 0;
 
