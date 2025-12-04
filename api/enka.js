@@ -1,11 +1,10 @@
 async function getEnkaData(uid) {
-    const target = `https://enka.network/u/${uid}/__data.json`;
-    const corsUrl = `https://corsproxy.io/?${encodeURIComponent(target)}`;
+    const url = `https://api.enka.network/uid/${uid}/`;
 
-    const res = await fetch(corsUrl);
+    const res = await fetch(url);
 
     if (!res.ok) {
-        throw new Error("Failed to fetch Enka data (CORS proxy error)");
+        throw new Error(`Failed to load from api.enka.network: ${res.status}`);
     }
 
     return await res.json();
