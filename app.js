@@ -20,7 +20,7 @@ async function fetchProfileTable(uid) {
         const doc = parser.parseFromString(html, "text/html");
 
         // Ищем таблицу (берём первую)
-        const table = doc.querySelector(".container.mt-4 table");
+        const table = doc.querySelector(".mt-4");
 
         if (!table) {
             return "<p>No table found on page</p>";
