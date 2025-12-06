@@ -18,17 +18,25 @@ async function fetchProfileTable(uid) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
-        // Получаем все div.mt-4
-        const blocks = doc.getElementsByClassName("mt-4");
-
-        if (!blocks || blocks.length === 0) {
+        // 1. Ищем div.mt-4
+        const mt4 = doc.querySelector("div.mt-4");
+        if (!mt4) {
             return "<p>No mt-4 div found on page</p>";
         }
 
-        // Берём первый
-        const target = blocks[0];
+        // 2. Ищем внутри div.mt-4 блоки таблиц
+        const cards = mt4.querySelectorAll("div.card.overflow-x-auto.p-1");
 
-        return target.outerHTML;
+        if (!cards || cards.length === 0) {
+            return "<p>No table container found inside mt-4</p>";
+        }
+
+        // 3. Собираем HTML: сначала mt-4, затем все таблицы внутри
+        let result = `<div class="mt-4">`;
+        cards.forEach(c => result += c.outerHTML);
+        result += `</div>`;
+
+        return result;
 
     } catch (err) {
         console.error(err);
