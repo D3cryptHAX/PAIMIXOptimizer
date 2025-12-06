@@ -15,18 +15,20 @@ async function fetchProfileTable(uid) {
 
         const html = await response.text();
 
-        // Парсим HTML через DOMParser
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
-        // Ищем таблицу (берём первую)
-        const table = doc.querySelector(".mt-4");
+        // Получаем все div.mt-4
+        const blocks = doc.getElementsByClassName("mt-4");
 
-        if (!table) {
-            return "<p>No table found on page</p>";
+        if (!blocks || blocks.length === 0) {
+            return "<p>No mt-4 div found on page</p>";
         }
 
-        return table.outerHTML;
+        // Берём первый
+        const target = blocks[0];
+
+        return target.outerHTML;
 
     } catch (err) {
         console.error(err);
