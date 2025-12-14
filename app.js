@@ -6,7 +6,7 @@ const charactersDiv = document.getElementById("characters");
 const CORS_PROXY = "https://corsproxy.io/?";
 
 async function fetchProfileTables(uid) {
-    const profileUrl = `https://akasha.cv/profile/${uid}`;
+    const profileUrl = `https://genshin-builds.com/en/profile/${uid}`;
     const proxiedUrl = CORS_PROXY + encodeURIComponent(profileUrl);
 
     try {
