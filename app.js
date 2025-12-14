@@ -19,16 +19,13 @@ async function fetchProfileTable(uid) {
         const doc = parser.parseFromString(html, "text/html");
 
         // 1. Ищем div.mt-4
-        const mt4 = doc.querySelector("div.custom-table-wrapper");
+        const mt4 = doc.querySelector("table");
         if (!mt4) {
             return "<p>No table</p>";
         }
 
         // 3. Собираем HTML: сначала mt-4, затем все таблицы внутри
         cards.forEach(c => c.outerHTML);
-        result += `</div>`;
-
-        return result;
 
     } catch (err) {
         console.error(err);
