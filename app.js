@@ -6,7 +6,7 @@ const charactersDiv = document.getElementById("characters");
 const proxy = "https://corsproxy.io/?";
 
 async function fetchProfileTable(uid) {
-    const url = `https://genshin-builds.com/en/profile/${uid}`;
+    const url = `https://akasha.cv/profile/${uid}`;
     const proxiedUrl = proxy + encodeURIComponent(url);
 
     try {
@@ -19,21 +19,13 @@ async function fetchProfileTable(uid) {
         const doc = parser.parseFromString(html, "text/html");
 
         // 1. Ищем div.mt-4
-        const mt4 = doc.querySelector("div.mt-4");
+        const mt4 = doc.querySelector("div.custom-table-wrapper");
         if (!mt4) {
-            return "<p>No mt-4 div found on page</p>";
-        }
-
-        // 2. Ищем внутри div.mt-4 блоки таблиц
-        const cards = mt4.querySelectorAll("div.card.overflow-x-auto.p-1");
-
-        if (!cards || cards.length === 0) {
-            return "<p>No table container found inside mt-4</p>";
+            return "<p>No table</p>";
         }
 
         // 3. Собираем HTML: сначала mt-4, затем все таблицы внутри
-        let result = `<div class="mt-4">`;
-        cards.forEach(c => result += c.outerHTML);
+        cards.forEach(c => c.outerHTML);
         result += `</div>`;
 
         return result;
