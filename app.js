@@ -14,18 +14,16 @@ async function fetchProfileTable(uid) {
         if (!response.ok) throw new Error("Failed to load page");
 
         const html = await response.text();
-
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
-        // 1. Ищем div.mt-4
-        const mt4 = doc.querySelector("table");
-        if (!mt4) {
-            return "<p>No table</p>";
+        const table = doc.querySelector("table");
+        if (!table) {
+            return "<p>No table found</p>";
         }
 
-        // 3. Собираем HTML: сначала mt-4, затем все таблицы внутри
-        cards.forEach(c => c.outerHTML);
+        // ВАЖНО: возвращаем HTML таблицы
+        return table.outerHTML;
 
     } catch (err) {
         console.error(err);
