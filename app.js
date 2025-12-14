@@ -2,31 +2,37 @@ const loadBtn = document.getElementById("loadBtn");
 const uidInput = document.getElementById("uidInput");
 const charactersDiv = document.getElementById("characters");
 
-// CORS Proxy (public)
-const proxy = "https://corsproxy.io/?";
+// Public CORS proxy
+const CORS_PROXY = "https://corsproxy.io/?";
 
-async function fetchProfileTable(uid) {
-    const url = `https://akasha.cv/profile/${uid}`;
-    const proxiedUrl = proxy + encodeURIComponent(url);
+async function fetchProfileTables(uid) {
+    const profileUrl = `https://akasha.cv/profile/${uid}`;
+    const proxiedUrl = CORS_PROXY + encodeURIComponent(profileUrl);
 
     try {
         const response = await fetch(proxiedUrl);
-        if (!response.ok) throw new Error("Failed to load page");
+        if (!response.ok) {
+            throw new Error("Failed to load profile page");
+        }
 
         const html = await response.text();
+
+        // Parse HTML
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
 
-        const table = doc.querySelector("table");
-        if (!table) {
-            return "<p>No table found</p>";
+        // Find all tables
+        const tables = Array.from(doc.querySelectorAll("table"));
+
+        if (tables.length === 0) {
+            return "<p>No tables found</p>";
         }
 
-        // ВАЖНО: возвращаем HTML таблицы
-        return table.outerHTML;
+        // Combine tables HTML
+        return tables.map(table => table.outerHTML).join("");
 
-    } catch (err) {
-        console.error(err);
+    } catch (error) {
+        console.error("Fetch error:", error);
         return "<p>Error loading data</p>";
     }
 }
@@ -41,8 +47,7 @@ loadBtn.addEventListener("click", async () => {
 
     charactersDiv.innerHTML = "<p>Loading...</p>";
 
-    // Получаем HTML таблицы
-    const tableHTML = await fetchProfileTable(uid);
+    const tablesHTML = await fetchProfileTables(uid);
 
-    charactersDiv.innerHTML = tableHTML;
+    charactersDiv.innerHTML = tablesHTML;
 });
